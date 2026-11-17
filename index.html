@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Khaled Elserafy Portfolio</title>
+<meta name="description" content="Khaled Elserafy, GIS Specialist and OSM Mapping Specialist from Egypt. Terrain, hydrology and network analysis in ArcGIS Pro, and large-scale OpenStreetMap mapping.">
+<meta name="theme-color" content="#edf2f3">
+<meta property="og:title" content="Khaled Elserafy | GIS Specialist">
+<meta property="og:description" content="GIS and OpenStreetMap mapping portfolio: 85,000+ buildings, 500,000+ trees, 4,000+ km of truck tracks mapped.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a1a2a'/%3E%3Cpath d='M32 4v10M32 50v10M4 32h10M50 32h10' stroke='%2338c5c3' stroke-width='3'/%3E%3Ctext x='32' y='41' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='%23ffffff'%3EKE%3C/text%3E%3C/svg%3E">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a survey sheet. A contour-field hero that bends around the cursor, then each project
+   is a map sheet with registration marks, mono coordinates and real OSM tags as data labels. */
+:root {
+  --bg: #edf2f3;
+  --bg2: #e1e9eb;
+  --surface: #f8fafa;
+  --paper: #ffffff;
+  --fg: #0a1a2a;
+  --fg2: #3a4f61;
+  --line: #c2cfd4;
+  --accent: #0a7c84;
+  --on-accent: #ffffff;
+  --accent-inv: #38c5c3;
+  --on-accent-inv: #04202a;
+  --signal: #c63e0c;
+  --contour: rgba(10, 124, 132, 0.3);
+  --hdr: rgba(237, 242, 243, 0.94);
+  --shadow: 0 1px 2px rgba(10, 26, 42, 0.06), 0 14px 34px rgba(10, 26, 42, 0.09);
+  --imgf: none;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #06111c; --bg2: #0a1a29; --surface: #0d2133; --paper: #f1f5f6;
+    --fg: #e8f1f3; --fg2: #9db5c1; --line: #1d3447;
+    --accent: #38c5c3; --on-accent: #04202a; --accent-inv: #0a7c84; --on-accent-inv: #ffffff; --signal: #ff7a3d;
+    --contour: rgba(56, 197, 195, 0.28); --hdr: rgba(6, 17, 28, 0.92);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
+    --imgf: brightness(0.92);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #06111c; --bg2: #0a1a29; --surface: #0d2133; --paper: #f1f5f6;
+  --fg: #e8f1f3; --fg2: #9db5c1; --line: #1d3447;
+  --accent: #38c5c3; --on-accent: #04202a; --accent-inv: #0a7c84; --on-accent-inv: #ffffff; --signal: #ff7a3d;
+  --contour: rgba(56, 197, 195, 0.28); --hdr: rgba(6, 17, 28, 0.92);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
+  --imgf: brightness(0.92);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 16px/1.65 var(--f-body);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--hdr);
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.mono { font-family: var(--f-mono); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+a.sr:focus { position: fixed; top: 8px; left: 8px; width: auto; height: auto; clip: auto; z-index: 100; padding: 0.6rem 1rem; background: var(--fg); color: var(--bg); }
+
+.wrap {
+  width: 100%; max-width: 1280px; margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.eyebrow {
+  font: 500 0.75rem/1.4 var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.15rem; min-height: 44px;
+  border: 1.5px solid var(--fg); background: transparent; color: var(--fg); text-decoration: none; cursor: pointer;
+  font: 600 0.9rem/1 var(--f-body); letter-spacing: 0.01em; transition: transform .2s, background .2s, color .2s;
+}
+.btn:hover { transform: translateY(-2px); background: var(--fg); color: var(--bg); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.primary:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--hdr); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.hdr-in { display: flex; align-items: center; gap: 1rem; min-height: 60px; }
+.brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; font: 700 0.95rem/1 var(--f-display); letter-spacing: 0.02em; }
+.mark {
+  position: relative; display: grid; place-items: center; width: 34px; height: 34px;
+  border: 1.5px solid var(--fg); font: 600 0.78rem/1 var(--f-mono);
+}
+.mark::before, .mark::after { content: ""; position: absolute; background: var(--accent); }
+.mark::before { left: -6px; right: -6px; top: 50%; height: 1px; opacity: .7; }
+.mark::after { top: -6px; bottom: -6px; left: 50%; width: 1px; opacity: .7; }
+.mark span { position: relative; z-index: 1; background: var(--hdr); padding: 0 2px; }
+.nav { margin-left: auto; display: flex; align-items: center; gap: 0.25rem; }
+.nav a {
+  position: relative; padding: 0.6rem 0.7rem; text-decoration: none; font: 500 0.85rem/1 var(--f-body); color: var(--fg2);
+}
+.nav a::after {
+  content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.2rem; height: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left; transition: transform .3s;
+}
+.nav a:hover, .nav a[aria-current="true"] { color: var(--fg); }
+.nav a:hover::after, .nav a[aria-current="true"]::after { transform: scaleX(1); }
+.icon-btn {
+  display: inline-grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--line);
+  background: transparent; cursor: pointer; transition: border-color .2s, background .2s;
+}
+.icon-btn:hover { border-color: var(--accent); background: var(--bg2); }
+.icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+.menu-btn { display: none; }
+.progress {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left; pointer-events: none;
+}
+@media (max-width: 860px) {
+  .menu-btn { display: inline-grid; }
+  .hdr-actions { margin-left: auto; }
+  .nav {
+    position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--bg); border-bottom: 1px solid var(--line); padding: 0.5rem max(var(--gutter), env(safe-area-inset-left, 0px)) 0.75rem;
+    display: none; margin: 0;
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 0.9rem 0; border-bottom: 1px solid var(--line); font-size: 1rem; }
+  .nav a::after { display: none; }
+}
+.hdr-actions { display: flex; gap: 0.5rem; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+.hero canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  -webkit-mask-image: linear-gradient(#000 72%, transparent); mask-image: linear-gradient(#000 72%, transparent);
+}
+.hero-in { position: relative; padding-block: 22px clamp(44px, 6vw, 72px); }
+.status {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.35rem 1.5rem;
+  padding-bottom: 14px; border-bottom: 1px solid var(--line);
+  font: 400 0.72rem/1.5 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg2);
+}
+.status b { font-weight: 500; color: var(--fg); font-variant-numeric: tabular-nums; }
+.live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--signal); margin-right: 0.5rem; animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.25; transform: scale(0.7); } }
+.hero-copy { padding-top: clamp(36px, 7vw, 88px); }
+.h1 {
+  margin: 0.9rem 0 1.4rem; font-family: var(--f-display); font-weight: 800; font-stretch: 125%;
+  font-size: clamp(2rem, 7.4vw, 6.4rem); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase;
+}
+.h1 .ln { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.h1 .ln > span { display: block; white-space: nowrap; animation: rise 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--d, 0s); }
+.h1 .ln2 > span { color: transparent; -webkit-text-stroke: clamp(1px, 0.22vw, 2.4px) var(--fg); }
+@keyframes rise { from { transform: translateY(105%); } }
+.lede { max-width: 38rem; font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: var(--fg2); animation: fade 0.9s 0.45s both; }
+.lede strong { color: var(--fg); font-weight: 600; }
+@keyframes fade { from { opacity: 0; transform: translateY(10px); } }
+.cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; animation: fade 0.9s 0.6s both; }
+.stats {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1.25rem;
+  margin-top: clamp(36px, 6vw, 64px); animation: fade 0.9s 0.75s both;
+}
+@media (min-width: 860px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 0.35rem; padding-top: 0.9rem; border-top: 2px solid var(--fg); }
+.stat dt { font: 400 0.72rem/1.4 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+.stat dd { font: 700 clamp(1.8rem, 4.2vw, 3.2rem)/1 var(--f-display); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.stat dd small { font-size: 0.45em; font-weight: 600; letter-spacing: 0; margin-left: 0.15em; color: var(--accent); }
+
+/* portrait */
+.hero-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; align-items: end; }
+@media (min-width: 860px) { .hero-row { grid-template-columns: minmax(0, 1fr) auto; gap: 3rem; align-items: start; } }
+.portrait { position: relative; justify-self: start; width: clamp(190px, 46vw, 220px); margin: 0; padding: 8px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); animation: fade 0.9s 0.5s both; }
+@media (min-width: 860px) { .portrait { justify-self: end; width: clamp(220px, 22vw, 300px); margin-top: calc(-1 * min(14vw, 12.2rem)); } }
+.portrait .ph { position: relative; overflow: hidden; background: var(--bg2); }
+.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; filter: var(--imgf); }
+.portrait .ph::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--signal); box-shadow: 0 0 14px var(--signal); opacity: 0; animation: scan 2.2s 1.1s ease-in-out 1 both; }
+@keyframes scan { 0% { opacity: 1; top: 0; } 85% { opacity: 1; } 100% { opacity: 0; top: calc(100% - 2px); } }
+.portrait::before, .portrait::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--accent); pointer-events: none; }
+.portrait::before { top: -7px; left: -7px; border-right: 0; border-bottom: 0; }
+.portrait::after { bottom: -7px; right: -7px; border-left: 0; border-top: 0; }
+.portrait figcaption { display: grid; gap: 0.15rem; padding: 0.7rem 0.15rem 0.1rem; }
+.portrait figcaption b { font: 700 0.95rem/1.25 var(--f-display); letter-spacing: -0.01em; }
+.portrait figcaption span { font: 400 0.68rem/1.4 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+
+/* ---------- ticker ---------- */
+.ticker { overflow: hidden; background: var(--bg2); border-bottom: 1px solid var(--line); }
+.ticker-track { display: flex; width: max-content; animation: tick 46s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker ul { display: flex; flex: none; gap: 2.6rem; padding: 0.95rem 2.6rem 0.95rem 0; }
+.ticker li { display: flex; align-items: center; gap: 2.6rem; white-space: nowrap; font: 500 0.8rem/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.ticker li::after { content: "+"; color: var(--signal); }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* ---------- sections ---------- */
+section { scroll-margin-top: 64px; }
+.sec { padding-block: clamp(64px, 9vw, 120px); }
+.sec + .sec { border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 0.9rem; margin-bottom: clamp(36px, 5vw, 64px); max-width: 46rem; }
+.sec-head h2 { font: 800 clamp(1.9rem, 4.6vw, 3.4rem)/1.04 var(--f-display); font-stretch: 112%; letter-spacing: -0.02em; text-wrap: balance; }
+.sec-head p { color: var(--fg2); font-size: 1.08rem; max-width: 38rem; }
+
+.reveal.in { animation: reveal 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
+@keyframes reveal { from { opacity: 0; transform: translateY(28px); } }
+
+/* ---------- case studies ---------- */
+.case { padding-block: clamp(40px, 6vw, 72px); border-top: 1px solid var(--line); }
+.case:first-of-type { border-top: 0; padding-top: 0; }
+.case-grid { display: grid; gap: clamp(24px, 4vw, 56px); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 900px) { .case-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+.case-meta { font: 500 0.74rem/1.5 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg2); display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; }
+.case-meta b { color: var(--signal); font-weight: 500; }
+.case h3 { margin: 0.7rem 0 1rem; font: 700 clamp(1.5rem, 2.8vw, 2.2rem)/1.12 var(--f-display); font-stretch: 108%; letter-spacing: -0.015em; text-wrap: balance; }
+.case p + p { margin-top: 0.8rem; }
+.case-text { color: var(--fg2); }
+.case-text strong { color: var(--fg); font-weight: 600; }
+.facts { margin-top: 1.4rem; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.facts div { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+.facts dt { font: 400 0.72rem/1.7 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+.link { color: var(--accent); font-weight: 600; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+
+/* map sheet frame */
+.sheet { position: relative; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.sheet::before, .sheet::after { position: absolute; font: 500 13px/1 var(--f-mono); color: var(--accent); pointer-events: none; z-index: 2; }
+.sheet::before { content: "+"; top: -8px; left: -4px; }
+.sheet::after { content: "+"; bottom: -8px; right: -4px; }
+.sheet img { filter: var(--imgf); }
+
+/* JOSM tag panel */
+.josm { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); font-family: var(--f-mono); }
+.josm-top { display: flex; justify-content: space-between; gap: 1rem; padding: 0.65rem 1rem; background: var(--bg2); border-bottom: 1px solid var(--line); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+.josm table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.josm th { text-align: left; font-weight: 400; padding: 0.55rem 1rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); border-bottom: 1px solid var(--line); }
+.josm td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); }
+.josm tr:last-child td { border-bottom: 0; }
+.josm td:first-child { color: var(--fg2); }
+.josm td:nth-child(2) { color: var(--accent); font-weight: 500; }
+.josm td:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--fg); font-weight: 500; }
+.flow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: 1.5rem; border: 1px solid var(--line); }
+@media (min-width: 520px) { .flow { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.flow li { padding: 0.9rem 1rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; font-size: 0.88rem; line-height: 1.4; }
+.flow li b { display: block; font: 500 0.7rem/1 var(--f-mono); letter-spacing: 0.1em; color: var(--signal); margin-bottom: 0.5rem; }
+.flow { overflow: hidden; }
+
+/* filmstrip */
+.film-wrap { margin-top: clamp(28px, 4vw, 48px); }
+.film-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 0.9rem; }
+.film-head p { font: 400 0.74rem/1.5 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+.film-btns { display: flex; gap: 0.5rem; }
+.film { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; padding-bottom: 4px; }
+.film::-webkit-scrollbar { display: none; }
+.film.drag { cursor: grabbing; scroll-snap-type: none; }
+.film figure { position: relative; flex: 0 0 min(86%, 760px); scroll-snap-align: start; overflow: hidden; background: var(--bg2); }
+.film button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: inherit; }
+.film img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); filter: var(--imgf); -webkit-user-drag: none; user-select: none; }
+.film figure:hover img { transform: scale(1.05); }
+.film figcaption { position: absolute; left: 0; bottom: 0; right: 0; padding: 2.2rem 1rem 0.8rem; background: linear-gradient(transparent, rgba(3, 12, 20, 0.78)); color: #f1f6f7; font: 400 0.76rem/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+
+/* compare */
+.cmp-wrap { margin-top: clamp(40px, 6vw, 72px); display: grid; gap: 1.2rem; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .cmp-wrap { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); align-items: center; } }
+.cmp { position: relative; --pos: 50%; aspect-ratio: 1500 / 1159; overflow: hidden; user-select: none; background: var(--paper); }
+.cmp img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: var(--imgf); pointer-events: none; }
+.cmp .top { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+.cmp input {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; appearance: none; -webkit-appearance: none;
+}
+.cmp-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--signal); z-index: 2; pointer-events: none; }
+.cmp-knob {
+  position: absolute; top: 50%; left: var(--pos); width: 44px; height: 44px; margin: -22px 0 0 -22px; z-index: 2; border-radius: 50%;
+  display: grid; place-items: center; background: var(--signal); color: #fff; pointer-events: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  font: 600 14px/1 var(--f-mono); letter-spacing: 2px;
+}
+.cmp:focus-within .cmp-knob { outline: 3px solid var(--fg); outline-offset: 2px; }
+.cmp-tag { position: absolute; top: 10px; z-index: 2; padding: 0.35rem 0.6rem; background: rgba(5, 14, 22, 0.82); color: #fff; font: 500 0.7rem/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; pointer-events: none; }
+.cmp-tag.l { left: 10px; } .cmp-tag.r { right: 10px; }
+
+/* thumbnails + panels */
+.gal { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(28px, 4vw, 48px); }
+@media (min-width: 760px) { .gal.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .gal.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 560px) { .gal.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.thumb { position: relative; }
+.thumb button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; overflow: hidden; }
+.thumb img { width: 100%; transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.thumb:hover img { transform: scale(1.04); }
+.thumb figcaption {
+  display: block; padding: 0.55rem 0.75rem; background: var(--surface); border-top: 1px solid var(--line);
+  font: 400 0.72rem/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg2);
+}
+.thumb.sq img { aspect-ratio: 8 / 7; object-fit: contain; background: var(--paper); }
+.thumb.tall img { aspect-ratio: 1 / 2.2; object-fit: contain; background: var(--paper); }
+.thumb.sheetimg img { aspect-ratio: 1500 / 1159; object-fit: cover; }
+.thumb.wide { grid-column: 1 / -1; }
+.thumb.wide img { aspect-ratio: auto; object-fit: contain; background: var(--paper); }
+.gal.routes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 760px) { .gal.routes { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.gal.seabed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .gal.seabed { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.route-cap { padding: 0.6rem 0.75rem 0.8rem; background: var(--surface); border-top: 1px solid var(--line); font-size: 0.82rem; line-height: 1.45; color: var(--fg2); }
+.route-cap b { display: block; font: 500 0.7rem/1.4 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--signal); margin-bottom: 0.15rem; }
+.gal .thumb.route img { aspect-ratio: 500 / 1190; object-fit: contain; background: var(--paper); }
+
+.team { display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); margin-top: clamp(36px, 5vw, 64px); }
+@media (min-width: 700px) { .team { grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr); align-items: end; } }
+.team figure { overflow: hidden; }
+.team img { width: 100%; filter: var(--imgf); }
+.team p { grid-column: 1 / -1; font: 400 0.74rem/1.5 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+
+/* ---------- skills ---------- */
+.skills { display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 2px solid var(--fg); }
+@media (min-width: 820px) { .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 6vw, 96px); } }
+.skill-group { padding-block: 1.6rem 1.2rem; border-bottom: 1px solid var(--line); }
+.skill-group h3 { font: 500 0.78rem/1.4 var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+.skill-group li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-top: 1px dashed var(--line); font-weight: 500; }
+.skill-group li:first-child { border-top: 0; }
+.lvl { display: inline-flex; align-items: center; gap: 0.6rem; font: 400 0.7rem/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); white-space: nowrap; }
+.segs { display: inline-flex; gap: 3px; }
+.segs i { display: block; width: 18px; height: 6px; background: var(--line); transform-origin: left; }
+.segs i.on { background: var(--accent); }
+.reveal.in .segs i.on { animation: seg 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--d, 0s) + var(--k, 0) * 0.12s + 0.2s); }
+@keyframes seg { from { transform: scaleX(0); } }
+.also { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.5rem 0.6rem; align-items: center; }
+.also > span { font: 500 0.72rem/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg2); margin-right: 0.4rem; }
+.chip { padding: 0.4rem 0.7rem; border: 1px solid var(--line); background: var(--surface); font: 400 0.8rem/1 var(--f-mono); }
+
+/* ---------- experience ---------- */
+.xp-grid { display: grid; gap: clamp(32px, 5vw, 72px); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .xp-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+.timeline { position: relative; display: grid; gap: 2.4rem; padding-left: 1.6rem; }
+.timeline::before { content: ""; position: absolute; left: 4px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+.timeline::after { content: ""; position: absolute; left: 4px; top: 8px; width: 1px; height: var(--tl, 0%); background: var(--accent); transition: height 0.25s linear; }
+.tl-item { position: relative; }
+.tl-item::before { content: ""; position: absolute; left: calc(-1.6rem + 0px); top: 8px; width: 9px; height: 9px; background: var(--bg); border: 2px solid var(--accent); }
+.tl-item.now::before { background: var(--signal); border-color: var(--signal); animation: pulse 1.8s ease-in-out infinite; }
+.tl-date { font: 500 0.74rem/1.4 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--signal); }
+.tl-item h3 { margin: 0.35rem 0 0.2rem; font: 700 1.3rem/1.2 var(--f-display); letter-spacing: -0.01em; }
+.tl-org { color: var(--fg2); font-size: 0.95rem; margin-bottom: 0.7rem; }
+.tl-item ul { display: grid; gap: 0.5rem; }
+.tl-item li { position: relative; padding-left: 1.1rem; color: var(--fg2); font-size: 0.96rem; }
+.tl-item li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 6px; height: 1px; background: var(--accent); }
+.profile { padding: clamp(20px, 3vw, 32px); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); align-self: start; }
+.profile h3 { font: 500 0.78rem/1.4 var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+.profile p { color: var(--fg2); }
+.profile p + h3 { margin-top: 1.6rem; }
+.profile .deg { font: 700 1.15rem/1.3 var(--f-display); color: var(--fg); letter-spacing: -0.01em; }
+
+/* ---------- certificates ---------- */
+.certs { border-top: 2px solid var(--fg); }
+.cert { display: grid; gap: 0.8rem 2rem; grid-template-columns: minmax(0, 1fr); padding-block: 1.3rem; border-bottom: 1px solid var(--line); transition: background .25s; }
+@media (min-width: 760px) { .cert { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
+.cert:hover { background: var(--bg2); }
+.cert-by { display: flex; flex-direction: column; gap: 0.2rem; padding-inline: 0.6rem; }
+.cert-by b { font: 700 1.1rem/1.3 var(--f-display); letter-spacing: -0.01em; }
+.cert-by span { font: 400 0.74rem/1.4 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg2); }
+.cert ul { display: grid; gap: 0.45rem; padding-inline: 0.6rem; }
+.cert li { display: flex; justify-content: space-between; gap: 1.5rem; font-size: 0.96rem; }
+.cert li i { font: normal 400 0.78rem/1.7 var(--f-mono); color: var(--fg2); white-space: nowrap; }
+
+.cert-body { display: grid; gap: 0.9rem; min-width: 0; align-content: start; }
+.cert-thumbs { display: flex; flex-wrap: wrap; gap: 8px; padding-inline: 0.6rem; }
+.ct { width: 116px; padding: 0; border: 1px solid var(--line); background: var(--paper); cursor: zoom-in; overflow: hidden; transition: transform .25s, border-color .25s, box-shadow .25s; }
+.ct:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow); }
+.ct img { width: 100%; height: auto; filter: var(--imgf); }
+
+/* ---------- contact ---------- */
+.contact { background: var(--fg); color: var(--bg); position: relative; overflow: hidden; }
+.contact .eyebrow { color: var(--accent-inv); }
+.contact-big { font: 800 clamp(2rem, 6.5vw, 5.4rem)/0.98 var(--f-display); font-stretch: 118%; letter-spacing: -0.025em; text-transform: uppercase; margin: 1rem 0 2rem; text-wrap: balance; }
+.contact-grid { display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); }
+@media (min-width: 860px) { .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 6vw, 96px); } }
+.c-row { display: grid; grid-template-columns: 6rem minmax(0, 1fr) auto; align-items: center; gap: 0.8rem; padding: 1rem 0; border-bottom: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); }
+.c-row dt { font: 400 0.72rem/1.4 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+.c-row dd { font: 500 1.02rem/1.4 var(--f-mono); overflow-wrap: anywhere; min-width: 0; }
+.c-row a { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--accent-inv); }
+.copy {
+  min-height: 36px; padding: 0.4rem 0.8rem; border: 1px solid color-mix(in srgb, var(--bg) 45%, transparent); background: transparent; color: inherit; cursor: pointer;
+  font: 500 0.72rem/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; transition: background .2s, color .2s;
+}
+.copy:hover { background: var(--bg); color: var(--fg); }
+.contact .btn { border-color: var(--bg); color: var(--bg); }
+.contact .btn:hover { background: var(--bg); color: var(--fg); }
+.contact :focus-visible { outline-color: var(--accent-inv); }
+.contact .btn.primary { background: var(--accent-inv); border-color: var(--accent-inv); color: var(--on-accent-inv); }
+.contact .btn.primary:hover { background: var(--bg); border-color: var(--bg); color: var(--fg); }
+.c-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; padding-block: 1.4rem; font: 400 0.74rem/1.5 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg2); }
+@media (max-width: 520px) { .c-row { grid-template-columns: minmax(0, 1fr) auto; } .c-row dt { grid-column: 1 / -1; } }
+
+/* ---------- lightbox ---------- */
+.lb {
+  position: fixed; inset: 0; z-index: 50; display: grid; grid-template-rows: minmax(0, 1fr) auto; place-items: center; gap: 0.6rem;
+  background: rgba(3, 10, 17, 0.94);
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.lb[hidden] { display: none; }
+.lb img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; background: #fff; }
+.lb figure { display: contents; }
+.lb figcaption { color: #dbe7ea; font: 400 0.78rem/1.4 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+.lb button {
+  position: absolute; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.5); color: #fff; cursor: pointer; font: 400 26px/1 var(--f-body);
+}
+.lb button:hover { background: var(--accent); color: #04202a; border-color: var(--accent); }
+.lb .x { top: max(12px, env(safe-area-inset-top, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); }
+.lb .p { left: max(8px, env(safe-area-inset-left, 0px)); top: 50%; margin-top: -22px; }
+.lb .n { right: max(8px, env(safe-area-inset-right, 0px)); top: 50%; margin-top: -22px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: 0.001ms !important; }
+  .ticker-track { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<a class="sr" href="#work">Skip to work</a>
+
+<header class="site-header">
+  <div class="wrap hdr-in">
+    <a class="brand" href="#top" aria-label="Khaled Elserafy, back to top">
+      <span class="mark" aria-hidden="true"><span>KE</span></span>
+      <span>Khaled Elserafy</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hdr-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch light and dark theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+    <div class="progress" id="progress"></div>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" aria-labelledby="h1">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="wrap hero-in">
+    <div class="status">
+      <span><i class="live-dot"></i>Survey sheet · Makadi Bay, Red Sea · UTM 36N</span>
+      <span>Spot height <b id="rz">142</b> m · N <b id="rlat">26.9850</b>° · E <b id="rlon">33.9050</b>°</span>
+    </div>
+    <div class="hero-copy">
+      <p class="eyebrow">GIS Specialist · OSM Mapping Specialist</p>
+      <h1 class="h1" id="h1">
+        <span class="ln"><span style="--d:.05s">Khaled Ahmed</span></span>
+        <span class="ln ln2"><span style="--d:.18s">Elserafy</span></span>
+      </h1>
+      <div class="hero-row">
+        <div class="hero-txt">
+        <p class="lede">I turn satellite images into <strong>clean map data</strong>. I also build GIS databases and run terrain, water and network analysis in ArcGIS Pro.</p>
+        <div class="cta">
+          <a class="btn primary" href="#work">See my work</a>
+          <a class="btn" href="#contact">Contact me</a>
+          <a class="btn" href="https://drive.google.com/file/d/1XIEwmlg8CwLtd1W21CnetshqRJOme10P/view?usp=drivesdk" target="_blank" rel="noopener">View CV</a>
+        </div>
+        </div>
+        <figure class="portrait">
+          <div class="ph"><img src="img/khaled.jpg" width="400" height="400" alt="Portrait of Khaled Elserafy, smiling, in a dark blazer and white shirt"></div>
+          <figcaption><b>Khaled Elserafy</b><span>GIS Specialist · Egypt</span></figcaption>
+        </figure>
+      </div>
+      <dl class="stats">
+        <div class="stat"><dt>Buildings mapped</dt><dd><span class="count" data-to="85000">85,000</span><small>+</small></dd></div>
+        <div class="stat"><dt>Trees mapped</dt><dd><span class="count" data-to="500000">500,000</span><small>+</small></dd></div>
+        <div class="stat"><dt>Truck tracks</dt><dd><span class="count" data-to="4000">4,000</span><small>km+</small></dd></div>
+        <div class="stat"><dt>Fences</dt><dd><span class="count" data-to="500">500</span><small>km+</small></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-label="Tools I use">
+  <div class="ticker-track">
+    <ul>
+      <li>ArcGIS Pro</li><li>QGIS</li><li>JOSM</li><li>OpenStreetMap</li><li>Google Earth Engine</li><li>Google Earth Pro</li><li>AutoCAD</li><li>Civil 3D</li><li>SketchUp</li><li>Surfer</li><li>Total Station</li><li>ModelBuilder</li><li>Geodatabases</li>
+    </ul>
+    <ul aria-hidden="true">
+      <li>ArcGIS Pro</li><li>QGIS</li><li>JOSM</li><li>OpenStreetMap</li><li>Google Earth Engine</li><li>Google Earth Pro</li><li>AutoCAD</li><li>Civil 3D</li><li>SketchUp</li><li>Surfer</li><li>Total Station</li><li>ModelBuilder</li><li>Geodatabases</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= WORK ================= -->
+<section class="sec" id="work" aria-labelledby="work-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Selected work</p>
+      <h2 id="work-h">From OpenStreetMap data to city planning and terrain analysis</h2>
+      <p>One freelance job and one graduation project with five parts. The graduation project was made by the GeoVears Team at Damanhour University.</p>
+    </div>
+
+    <!-- OSM -->
+    <article class="case" id="osm">
+      <div class="case-grid">
+        <div class="reveal">
+          <div class="case-meta"><b>Freelance</b><span>April 2026 to now</span></div>
+          <h3>OpenStreetMap data production</h3>
+          <p class="case-text">I map large areas from satellite images for a map application company. I work in <strong>JOSM</strong> and keep the data clean and consistent, even at high volume. I also use AI-assisted workflows to map faster.</p>
+          <ol class="flow" aria-label="My mapping steps">
+            <li><b>01</b>Read the imagery</li>
+            <li><b>02</b>Digitize in JOSM</li>
+            <li><b>03</b>Validate the data</li>
+            <li><b>04</b>Upload to OSM</li>
+          </ol>
+        </div>
+        <div class="josm reveal" style="--d:.12s" role="group" aria-label="OpenStreetMap tags I map, with totals">
+          <div class="josm-top"><span>Tags / Memberships</span><span>4 keys</span></div>
+          <table>
+            <thead><tr><th>Key</th><th>Value</th><th>Mapped</th></tr></thead>
+            <tbody>
+              <tr><td>building</td><td>yes</td><td>85,000+</td></tr>
+              <tr><td>natural</td><td>tree</td><td>500,000+</td></tr>
+              <tr><td>highway</td><td>track</td><td>4,000+ km</td></tr>
+              <tr><td>barrier</td><td>fence</td><td>500+ km</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+
+    <!-- Makadi -->
+    <article class="case" id="makadi">
+      <div class="case-grid">
+        <div class="reveal">
+          <div class="case-meta"><b>Graduation project, part 1</b><span>2025 to 2026</span></div>
+          <h3>Makadi Bay compound: plans, zoning and 3D views</h3>
+          <p class="case-text">This is the applied project of the Surveying and GIS division at Damanhour University. The GeoVears Team planned a new compound on the Red Sea coast at Makadi Bay, Hurghada. The sheets cover the master design, zoning, land parcels, water network, drainage and site analysis.</p>
+          <dl class="facts">
+            <div><dt>Place</dt><dd>Makadi Bay, Hurghada</dd></div>
+            <div><dt>Team</dt><dd>GeoVears Team, Faculty of Arts</dd></div>
+            <div><dt>Tools</dt><dd>AutoCAD, Civil 3D</dd></div>
+            <div><dt>Projection</dt><dd>UTM Zone 36N</dd></div>
+            <div><dt>Recognition</dt><dd>Certificate of appreciation from the Geography Department</dd></div>
+          </dl>
+          <p class="case-text" style="margin-top:1.1rem">City videos and CAD files are in the <a class="link" href="https://drive.google.com/drive/folders/1xxkcsMk-v4Et8Ydhy3PgyxC9mQJoseqO" target="_blank" rel="noopener">full project folder</a>.</p>
+        </div>
+        <div class="sheet reveal" style="--d:.12s">
+          <button type="button" style="display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in" data-lb="img/sheet-masterplan.jpg" data-cap="Master design sheet, Makadi Bay compound" data-group="sheets">
+            <img src="img/sheet-masterplan.jpg" width="1500" height="1159" alt="Master design sheet of the Makadi Bay compound with lakes, towers, a stadium and roads" loading="lazy">
+          </button>
+        </div>
+      </div>
+
+      <div class="film-wrap reveal">
+        <div class="film-head">
+          <p>3D city views · drag or use the arrows</p>
+          <div class="film-btns">
+            <button class="icon-btn" id="filmPrev" type="button" aria-label="Previous view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="icon-btn" id="filmNext" type="button" aria-label="Next view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="film" id="film" tabindex="0" aria-label="3D city views of the compound">
+          <figure><button type="button" data-lb="img/render1.jpg" data-cap="Twin towers over the main junction" data-group="renders"><img src="img/render1.jpg" width="1488" height="688" alt="Twin glass towers over a road junction, with the sea behind" loading="lazy" draggable="false"></button><figcaption>Twin towers over the main junction</figcaption></figure>
+          <figure><button type="button" data-lb="img/render2.jpg" data-cap="Lake district at sunset" data-group="renders"><img src="img/render2.jpg" width="1488" height="688" alt="Lake and low buildings at sunset with towers in the distance" loading="lazy" draggable="false"></button><figcaption>Lake district at sunset</figcaption></figure>
+          <figure><button type="button" data-lb="img/render3.jpg" data-cap="Coastal road and street lighting" data-group="renders"><img src="img/render3.jpg" width="1488" height="688" alt="Curved road with street lights and the sea on the horizon" loading="lazy" draggable="false"></button><figcaption>Coastal road and street lighting</figcaption></figure>
+          <figure><button type="button" data-lb="img/render4.jpg" data-cap="Mosque, stadium and the twin towers" data-group="renders"><img src="img/render4.jpg" width="1408" height="736" alt="Aerial view of a mosque, a stadium and the twin towers" loading="lazy" draggable="false"></button><figcaption>Mosque, stadium and the twin towers</figcaption></figure>
+          <figure><button type="button" data-lb="img/render5.jpg" data-cap="Stadium and lakeside park" data-group="renders"><img src="img/render5.jpg" width="1488" height="688" alt="Aerial view of a stadium next to a lake and homes" loading="lazy" draggable="false"></button><figcaption>Stadium and lakeside park</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="cmp-wrap">
+        <div class="reveal">
+          <p class="eyebrow">Compare two sheets</p>
+          <h3 style="margin-top:.6rem">Zoning and land parcels</h3>
+          <p class="case-text">Both sheets use the same frame, so you can slide between the land use plan and the parcel division. Drag the line, or focus it and use the arrow keys.</p>
+        </div>
+        <div class="sheet reveal" style="--d:.1s">
+          <div class="cmp" id="cmp">
+            <img src="img/sheet-parcels.jpg" width="1500" height="1159" alt="Land parcels sheet" loading="lazy">
+            <div class="top"><img src="img/sheet-zoning.jpg" width="1500" height="1159" alt="Zoning sheet with colored land uses" loading="lazy"></div>
+            <span class="cmp-tag l">Zoning</span><span class="cmp-tag r">Land parcels</span>
+            <div class="cmp-line"></div><div class="cmp-knob" aria-hidden="true">&lt;&gt;</div>
+            <input id="cmpRange" type="range" min="0" max="100" value="50" aria-label="Slide between the zoning sheet and the land parcels sheet">
+          </div>
+        </div>
+      </div>
+
+      <div class="gal g3 reveal" aria-label="More sheets">
+        <figure class="thumb sheet sheetimg"><button type="button" data-lb="img/sheet-water.jpg" data-cap="Water network sheet" data-group="sheets"><img src="img/sheet-water.jpg" width="1500" height="1159" alt="Water network sheet with main and branch lines and inspection chambers" loading="lazy"></button><figcaption>Water network</figcaption></figure>
+        <figure class="thumb sheet sheetimg"><button type="button" data-lb="img/sheet-drain.jpg" data-cap="Drainage sheet" data-group="sheets"><img src="img/sheet-drain.jpg" width="1500" height="1159" alt="Drainage sheet with main and branch lines and manholes" loading="lazy"></button><figcaption>Drainage</figcaption></figure>
+        <figure class="thumb sheet sheetimg"><button type="button" data-lb="img/sheet-site.jpg" data-cap="Site analysis sheet: sun, heat and wind" data-group="sheets"><img src="img/sheet-site.jpg" width="1500" height="1159" alt="Site analysis sheet showing sun path, wind directions and shade" loading="lazy"></button><figcaption>Site analysis: sun, heat, wind</figcaption></figure>
+      </div>
+
+      <div class="team reveal">
+        <figure><img src="img/team1.jpg" width="556" height="324" alt="GeoVears Team group photo in the desert wearing safety vests" loading="lazy"></figure>
+        <figure><img src="img/team2.jpg" width="556" height="350" alt="Team with a surveying instrument on a hillside" loading="lazy"></figure>
+        <figure><img src="img/team3.jpg" width="556" height="256" alt="Team celebrating on the beach" loading="lazy"></figure>
+        <p>The GeoVears Team during the field project</p>
+      </div>
+    </article>
+
+    <!-- Terrain -->
+    <article class="case" id="terrain">
+      <div class="case-grid">
+        <div class="reveal">
+          <div class="case-meta"><b>ArcGIS Pro</b><span>Graduation project, part 2</span></div>
+          <h3>Terrain analysis from a digital elevation model</h3>
+          <p class="case-text">Eight maps made from one digital elevation model (DEM) of the study area on the Makadi Bay coast, south of Hurghada. They show the shape of the land, how much earth to cut and fill, and what can be seen from a chosen point.</p>
+        </div>
+        <div class="gal g4 reveal" style="--d:.1s;margin-top:0">
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/dem.jpg" data-cap="DEM model" data-group="terrain"><img src="img/dem.jpg" width="596" height="516" alt="Colored elevation model" loading="lazy"></button><figcaption>DEM model</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/tin.jpg" data-cap="TIN model" data-group="terrain"><img src="img/tin.jpg" width="596" height="516" alt="Triangulated irregular network model" loading="lazy"></button><figcaption>TIN model</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/cutfill.jpg" data-cap="Cut and fill map" data-group="terrain"><img src="img/cutfill.jpg" width="592" height="516" alt="Cut and fill map in red and green" loading="lazy"></button><figcaption>Cut and fill</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/hillshade.jpg" data-cap="Hillshade map" data-group="terrain"><img src="img/hillshade.jpg" width="580" height="516" alt="Grey hillshade map" loading="lazy"></button><figcaption>Hillshade</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/contour.jpg" data-cap="Contour map" data-group="terrain"><img src="img/contour.jpg" width="596" height="510" alt="Contour line map" loading="lazy"></button><figcaption>Contours</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/kriging.jpg" data-cap="Kriging model" data-group="terrain"><img src="img/kriging.jpg" width="596" height="510" alt="Kriging surface in green and brown" loading="lazy"></button><figcaption>Kriging model</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/slope.jpg" data-cap="Slope map" data-group="terrain"><img src="img/slope.jpg" width="592" height="510" alt="Slope map" loading="lazy"></button><figcaption>Slope</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/viewshed.jpg" data-cap="Viewshed map" data-group="terrain"><img src="img/viewshed.jpg" width="580" height="510" alt="Viewshed map with visible areas in orange" loading="lazy"></button><figcaption>Viewshed</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- Hydrology -->
+    <article class="case" id="hydrology">
+      <div class="case-grid">
+        <div class="reveal">
+          <div class="case-meta"><b>ModelBuilder</b><span>Graduation project, part 3</span></div>
+          <h3>Stream orders and watersheds</h3>
+          <p class="case-text">A spatial model that finds streams and drainage basins from the DEM. The steps are <strong>Fill</strong>, <strong>Flow Direction</strong>, <strong>Flow Accumulation</strong>, <strong>Stream Order</strong>, <strong>Basin</strong> and <strong>Stream to Feature</strong>.</p>
+        </div>
+        <div class="gal g3 reveal" style="--d:.1s;margin-top:0">
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/streams.jpg" data-cap="Stream orders and watersheds" data-group="hydro"><img src="img/streams.jpg" width="610" height="524" alt="Map of stream orders and watershed areas" loading="lazy"></button><figcaption>Stream orders and watersheds</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/flowacc.jpg" data-cap="Flow accumulation" data-group="hydro"><img src="img/flowacc.jpg" width="608" height="524" alt="Flow accumulation map in dark green" loading="lazy"></button><figcaption>Flow accumulation</figcaption></figure>
+          <figure class="thumb sheet sq"><button type="button" data-lb="img/flowdir.jpg" data-cap="Flow direction" data-group="hydro"><img src="img/flowdir.jpg" width="592" height="524" alt="Flow direction map in many colors" loading="lazy"></button><figcaption>Flow direction</figcaption></figure>
+          <figure class="thumb sheet wide"><button type="button" data-lb="img/hydro-model.jpg" data-cap="ModelBuilder model for stream orders and watersheds" data-group="hydro"><img src="img/hydro-model.jpg" width="1400" height="393" alt="ModelBuilder diagram: Fill, Flow Direction, Flow Accumulation, Stream Order, Basin, Raster to Polygon, Stream to Feature" loading="lazy"></button><figcaption>The ModelBuilder model</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- Network -->
+    <article class="case" id="network">
+      <div class="case-meta reveal"><b>Network analysis</b><span>Graduation project, part 4</span></div>
+      <div class="reveal" style="display:grid;gap:.4rem;max-width:44rem">
+        <h3>Fastest routes in Hurghada</h3>
+        <p class="case-text">Best routes for each day of the field project, between the Youth City, the Makadi Bay site, the hospital, the marina and the old souq.</p>
+      </div>
+      <div class="gal routes reveal">
+        <figure class="thumb sheet route"><button type="button" data-lb="img/route1.jpg" data-cap="Day 1: Youth City to the tourist walkway" data-group="routes"><img src="img/route1.jpg" width="500" height="1190" alt="Route map for day 1" loading="lazy"></button><div class="route-cap"><b>Day 1</b>Youth City to the tourist walkway</div></figure>
+        <figure class="thumb sheet route"><button type="button" data-lb="img/route23.jpg" data-cap="Days 2 and 3: Youth City to the Makadi Bay site" data-group="routes"><img src="img/route23.jpg" width="500" height="1190" alt="Route map for days 2 and 3" loading="lazy"></button><div class="route-cap"><b>Days 2 and 3</b>Youth City to the Makadi Bay site</div></figure>
+        <figure class="thumb sheet route"><button type="button" data-lb="img/route4.jpg" data-cap="Day 4: Makadi Bay site to Hurghada General Hospital" data-group="routes"><img src="img/route4.jpg" width="500" height="1190" alt="Route map for day 4" loading="lazy"></button><div class="route-cap"><b>Day 4</b>Site to Hurghada General Hospital</div></figure>
+        <figure class="thumb sheet route"><button type="button" data-lb="img/route5.jpg" data-cap="Day 5: site, dolphin show, marina, restaurant and old souq" data-group="routes"><img src="img/route5.jpg" width="504" height="1190" alt="Route map for day 5" loading="lazy"></button><div class="route-cap"><b>Day 5</b>Site, dolphin show, marina, restaurant, old souq</div></figure>
+      </div>
+    </article>
+
+    <!-- Seabed -->
+    <article class="case" id="seabed">
+      <div class="case-meta reveal"><b>Hydrographic survey</b><span>Graduation project, part 5</span></div>
+      <div class="reveal" style="display:grid;gap:.4rem;max-width:44rem">
+        <h3>Sea floor analysis at Makadi Bay</h3>
+        <p class="case-text">Slope, depth contours, curvature, elevation and aspect maps for the water survey area. The depth contours run from -20 to -40 meters.</p>
+      </div>
+      <div class="gal seabed reveal">
+        <figure class="thumb sheet"><button type="button" data-lb="img/eco-slope.jpg" data-cap="Sea floor slope" data-group="seabed"><img src="img/eco-slope.jpg" width="500" height="996" alt="Slope map of the survey area" loading="lazy" style="aspect-ratio:1/2;object-fit:contain;background:var(--paper)"></button><figcaption>Slope</figcaption></figure>
+        <figure class="thumb sheet"><button type="button" data-lb="img/eco-bathy.jpg" data-cap="Bathymetric contour map" data-group="seabed"><img src="img/eco-bathy.jpg" width="500" height="996" alt="Depth contour map" loading="lazy" style="aspect-ratio:1/2;object-fit:contain;background:var(--paper)"></button><figcaption>Depth contours</figcaption></figure>
+        <figure class="thumb sheet"><button type="button" data-lb="img/eco-curv.jpg" data-cap="Curvature" data-group="seabed"><img src="img/eco-curv.jpg" width="500" height="996" alt="Curvature map" loading="lazy" style="aspect-ratio:1/2;object-fit:contain;background:var(--paper)"></button><figcaption>Curvature</figcaption></figure>
+        <figure class="thumb sheet"><button type="button" data-lb="img/eco-dem.jpg" data-cap="Digital elevation model" data-group="seabed"><img src="img/eco-dem.jpg" width="500" height="996" alt="Elevation model of the survey area" loading="lazy" style="aspect-ratio:1/2;object-fit:contain;background:var(--paper)"></button><figcaption>Elevation model</figcaption></figure>
+        <figure class="thumb sheet"><button type="button" data-lb="img/eco-aspect.jpg" data-cap="Aspect" data-group="seabed"><img src="img/eco-aspect.jpg" width="500" height="996" alt="Aspect map" loading="lazy" style="aspect-ratio:1/2;object-fit:contain;background:var(--paper)"></button><figcaption>Aspect</figcaption></figure>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section class="sec" id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Skills</p>
+      <h2 id="skills-h">Tools I use every day</h2>
+    </div>
+    <div class="skills">
+      <div class="skill-group reveal">
+        <h3>GIS and mapping</h3>
+        <ul>
+          <li>ArcGIS Pro <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i></span>Advanced</span></li>
+          <li>JOSM <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i></span>Advanced</span></li>
+          <li>OpenStreetMap editing <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i></span>Advanced</span></li>
+          <li>Google Earth Pro <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i></span>Advanced</span></li>
+          <li>Google Earth Engine <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i></span>Advanced</span></li>
+          <li>QGIS</li>
+          <li>Surfer (surface mapping)</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal" style="--d:.08s">
+        <h3>CAD and 3D</h3>
+        <ul>
+          <li>AutoCAD <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i></span>Advanced</span></li>
+          <li>Civil 3D <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i></i></span>Intermediate</span></li>
+          <li>SketchUp <span class="lvl"><span class="segs" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i></i></span>Intermediate</span></li>
+          <li>3D city modeling</li>
+          <li>Engineering drawings</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Geospatial analysis</h3>
+        <ul>
+          <li>Satellite imagery digitization</li>
+          <li>Spatial analysis</li>
+          <li>Geospatial data quality</li>
+          <li>ModelBuilder</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal" style="--d:.08s">
+        <h3>Data and automation</h3>
+        <ul>
+          <li>GIS database design</li>
+          <li>Geodatabases and feature classes</li>
+          <li>Spatial data organization</li>
+          <li>AI-assisted GIS workflows</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Surveying instruments</h3>
+        <ul>
+          <li>Level</li>
+          <li>Total Station</li>
+          <li>GPS</li>
+          <li>Echo Sounder (marine survey)</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal" style="--d:.08s">
+        <h3>Working style</h3>
+        <ul>
+          <li>Time management</li>
+          <li>Organization</li>
+          <li>Teamwork</li>
+          <li>Communication</li>
+        </ul>
+      </div>
+    </div>
+    <div class="also reveal">
+      <span>Also used</span><b class="chip">Python (arcpy)</b><b class="chip">PostGIS</b><b class="chip">SQL</b><b class="chip">Web GIS</b>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="sec" id="experience" aria-labelledby="xp-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Experience</p>
+      <h2 id="xp-h">Where I have worked</h2>
+    </div>
+    <div class="xp-grid">
+      <div class="timeline" id="timeline">
+        <div class="tl-item now reveal">
+          <p class="tl-date">April 2026 to now</p>
+          <h3>OpenStreetMap Data Editor</h3>
+          <p class="tl-org">Freelance</p>
+          <ul>
+            <li>Mapped 85,000+ buildings, 500,000+ trees, 4,000+ km of truck tracks and 500+ km of fences with JOSM and OpenStreetMap.</li>
+            <li>Digitized features from satellite imagery for large-scale data production.</li>
+            <li>Kept data quality and consistency across high-volume mapping tasks.</li>
+            <li>Used AI-assisted workflows to map faster.</li>
+          </ul>
+        </div>
+        <div class="tl-item reveal">
+          <p class="tl-date">2025 to 2026</p>
+          <h3>Technical Office Trainee</h3>
+          <p class="tl-org">Damanhour University</p>
+          <ul>
+            <li>Worked on the university property inventory project.</li>
+            <li>Used AutoCAD, Civil 3D, ArcGIS Pro, Google Earth Pro, Google Earth Engine, JOSM and SketchUp.</li>
+            <li>Applied Google Earth Engine and AI-assisted workflows to remote sensing and spatial analysis.</li>
+            <li>Built GIS geodatabases to organize and manage spatial data.</li>
+          </ul>
+        </div>
+        <div class="tl-item reveal">
+          <p class="tl-date">2023 to 2025</p>
+          <h3>Surveying field training</h3>
+          <p class="tl-org">Geography Department, Faculty of Arts, Damanhour University</p>
+          <ul>
+            <li>Trained on the Level, Total Station, GPS and Echo Sounder.</li>
+            <li>Carried out a full applied project with these instruments and produced the results in ArcGIS, Civil 3D, AutoCAD and Surfer.</li>
+            <li>The project was the graduation project in Hurghada, on the Red Sea.</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="profile reveal" style="--d:.1s">
+        <h3>Profile</h3>
+        <p>GIS and Surveying graduate. I have freelance experience in large-scale OpenStreetMap mapping and geospatial data production. I am looking for a GIS or mapping role.</p>
+        <h3>Education</h3>
+        <p class="deg">Licence Degree in Surveying and GIS</p>
+        <p>Faculty of Arts, Damanhour University, Egypt. Graduated 2026.</p>
+        <h3>Languages</h3>
+        <p>Arabic (native), English (intermediate)</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CERTIFICATES ================= -->
+<section class="sec" id="certificates" aria-labelledby="cert-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Courses and certificates</p>
+      <h2 id="cert-h">Training I have completed</h2>
+      <p>Select a certificate to see it full size.</p>
+    </div>
+    <div class="certs">
+      <div class="cert reveal">
+        <div class="cert-by"><b>Aziz GeoVerse</b><span>Community webinar</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>Infrastructure Data Conversion: CAD to GIS Workflows (2-hour webinar) <i>Nov 2026</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-aziz.jpg" data-cap="Aziz GeoVerse: CAD to GIS workflows, Nov 2026" data-group="certs"><img src="img/c-aziz-t.jpg" width="360" height="255" alt="Certificate: Aziz GeoVerse: CAD to GIS workflows, Nov 2026" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Humanitarian OpenStreetMap Team</b><span>HOT Data Quality Course</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>Intro JOSM <i>Aug 2026</i></li>
+            <li>Advanced JOSM <i>Aug 2026</i></li>
+            <li>Validation using JOSM <i>Aug 2026</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-hot.jpg" data-cap="HOT JOSM Skills Series, Aug 2026" data-group="certs"><img src="img/c-hot-t.jpg" width="360" height="255" alt="Certificate: HOT JOSM Skills Series, Aug 2026" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Information Technology Institute</b><span>ITI</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>Introduction to ArcGIS, 60 hours <i>Mar to Jul 2026</i></li>
+            <li>Winter GIS Training <i>2026</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-iti-arcgis.jpg" data-cap="ITI: Introduction to ArcGIS, 60 hours, Mar to Jul 2026" data-group="certs"><img src="img/c-iti-arcgis-t.jpg" width="360" height="255" alt="Certificate: ITI: Introduction to ArcGIS, 60 hours, Mar to Jul 2026" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Mahara-Tech</b><span>ITI platform</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>GIS Fundamentals: principles and techniques <i>2026</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-mahara.jpg" data-cap="Mahara-Tech: GIS Principles and Techniques, 2026" data-group="certs"><img src="img/c-mahara-t.jpg" width="360" height="255" alt="Certificate: Mahara-Tech: GIS Principles and Techniques, 2026" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Faculty of Arts, Damanhour University</b><span>Geography Department</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>Letter of proficiency: surveying instruments and GIS software <i>2023 to 2025</i></li>
+            <li>Certificate of appreciation for the applied project <i>2025 to 2026</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-fac-letter.jpg" data-cap="Faculty of Arts: letter of proficiency in surveying instruments and software" data-group="certs"><img src="img/c-fac-letter-t.jpg" width="360" height="255" alt="Certificate: Faculty of Arts: letter of proficiency in surveying instruments and software" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-fac-thanks.jpg" data-cap="Faculty of Arts: certificate of appreciation for the applied project, 2025 to 2026" data-group="certs"><img src="img/c-fac-thanks-t.jpg" width="360" height="255" alt="Certificate: Faculty of Arts: certificate of appreciation for the applied project, 2025 to 2026" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Esri</b><span>Web courses</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>GIS Basics <i>Jan 2025</i></li>
+            <li>ArcGIS Pro Basics <i>Jan 2025</i></li>
+            <li>Getting Started with Data Management <i>Jan 2025</i></li>
+            <li>Getting Started with Mapping and Visualization <i>Jan 2025</i></li>
+            <li>Getting Started with Spatial Analysis <i>Jan 2025</i></li>
+            <li>Getting Started with Imagery and Remote Sensing <i>Sep 2025</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-esri-basics.jpg" data-cap="Esri: GIS Basics, Jan 2025" data-group="certs"><img src="img/c-esri-basics-t.jpg" width="360" height="255" alt="Certificate: Esri: GIS Basics, Jan 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-esri-pro.jpg" data-cap="Esri: ArcGIS Pro Basics, Jan 2025" data-group="certs"><img src="img/c-esri-pro-t.jpg" width="360" height="255" alt="Certificate: Esri: ArcGIS Pro Basics, Jan 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-esri-data.jpg" data-cap="Esri: Getting Started with Data Management, Jan 2025" data-group="certs"><img src="img/c-esri-data-t.jpg" width="360" height="255" alt="Certificate: Esri: Getting Started with Data Management, Jan 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-esri-map.jpg" data-cap="Esri: Getting Started with Mapping and Visualization, Jan 2025" data-group="certs"><img src="img/c-esri-map-t.jpg" width="360" height="255" alt="Certificate: Esri: Getting Started with Mapping and Visualization, Jan 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-esri-spatial.jpg" data-cap="Esri: Getting Started with Spatial Analysis, Jan 2025" data-group="certs"><img src="img/c-esri-spatial-t.jpg" width="360" height="255" alt="Certificate: Esri: Getting Started with Spatial Analysis, Jan 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-esri-imagery.jpg" data-cap="Esri: Getting Started with Imagery and Remote Sensing, Sep 2025" data-group="certs"><img src="img/c-esri-imagery-t.jpg" width="360" height="255" alt="Certificate: Esri: Getting Started with Imagery and Remote Sensing, Sep 2025" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Geostep Academy</b><span>Academy</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>ArcGIS Pro from Beginner to Professional <i>Oct 2024 to Jul 2025</i></li>
+            <li>AutoCAD from Beginner to Professional <i>Jul to Aug 2025</i></li>
+            <li>Human distribution maps in GIS <i>Oct 2024 to Jul 2025</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-geo-arcgis.jpg" data-cap="Geostep Academy: ArcGIS Pro from Beginner to Professional" data-group="certs"><img src="img/c-geo-arcgis-t.jpg" width="360" height="255" alt="Certificate: Geostep Academy: ArcGIS Pro from Beginner to Professional" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-geo-autocad.jpg" data-cap="Geostep Academy: AutoCAD from Beginner to Professional" data-group="certs"><img src="img/c-geo-autocad-t.jpg" width="360" height="255" alt="Certificate: Geostep Academy: AutoCAD from Beginner to Professional" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-geo-human.jpg" data-cap="Geostep Academy: Human distribution maps in GIS" data-group="certs"><img src="img/c-geo-human-t.jpg" width="360" height="255" alt="Certificate: Geostep Academy: Human distribution maps in GIS" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="cert reveal">
+        <div class="cert-by"><b>Unihance, IT Sharks and others</b><span>Platforms</span></div>
+        <div class="cert-body">
+          <ul>
+            <li>AutoCAD Introduction (Unihance) <i>Sep 2025</i></li>
+            <li>Surfer (Unihance) <i>Sep 2025</i></li>
+            <li>Time management, personal and professional (Unihance) <i>Sep 2025</i></li>
+            <li>Time Management Skills (IT Sharks) <i>Sep 2025</i></li>
+            <li>Civil 3D course (Hisham Fawzy, YouTube) <i>2025</i></li>
+          </ul>
+          <div class="cert-thumbs">
+            <button class="ct" type="button" data-lb="img/c-uni-autocad.jpg" data-cap="Unihance: AutoCAD Introduction, Sep 2025" data-group="certs"><img src="img/c-uni-autocad-t.jpg" width="360" height="255" alt="Certificate: Unihance: AutoCAD Introduction, Sep 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-uni-surfer.jpg" data-cap="Unihance: Surfer, Sep 2025" data-group="certs"><img src="img/c-uni-surfer-t.jpg" width="360" height="255" alt="Certificate: Unihance: Surfer, Sep 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-uni-time.jpg" data-cap="Unihance: Time management, Sep 2025" data-group="certs"><img src="img/c-uni-time-t.jpg" width="360" height="255" alt="Certificate: Unihance: Time management, Sep 2025" loading="lazy"></button>
+            <button class="ct" type="button" data-lb="img/c-itsharks.jpg" data-cap="IT Sharks: Time Management Skills, Sep 2025" data-group="certs"><img src="img/c-itsharks-t.jpg" width="360" height="255" alt="Certificate: IT Sharks: Time Management Skills, Sep 2025" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="sec contact" id="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h2 class="contact-big" id="contact-h">Let us map something together</h2>
+    <dl class="contact-grid">
+      <div class="c-row"><dt>Email</dt><dd id="emailText">khaled.elserafy01@gmail.com</dd><button class="copy" type="button" data-copy="emailText">Copy</button></div>
+      <div class="c-row"><dt>Phone</dt><dd id="phoneText">+20 102 658 0014</dd><button class="copy" type="button" data-copy="phoneText">Copy</button></div>
+      <div class="c-row"><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/khaled-elserafy-4317b22a4/" target="_blank" rel="noopener">khaled-elserafy-4317b22a4</a></dd><span></span></div>
+      <div class="c-row"><dt>Based in</dt><dd>Damanhour, Egypt</dd><span></span></div>
+    </dl>
+    <div class="c-cta">
+      <a class="btn primary" href="mailto:khaled.elserafy01@gmail.com">Write an email</a>
+      <a class="btn" href="https://drive.google.com/file/d/1XIEwmlg8CwLtd1W21CnetshqRJOme10P/view?usp=drivesdk" target="_blank" rel="noopener">View CV</a>
+    </div>
+    <p class="sr" id="copyLive" aria-live="polite"></p>
+  </div>
+</section>
+</main>
+
+<footer class="wrap foot">
+  <span>© 2026 Khaled Ahmed Elserafy</span>
+  <span>GIS · Surveying · OpenStreetMap</span>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <button class="x" id="lbX" type="button" aria-label="Close">&times;</button>
+  <button class="p" id="lbP" type="button" aria-label="Previous image">&lsaquo;</button>
+  <button class="n" id="lbN" type="button" aria-label="Next image">&rsaquo;</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+</div>
+
+<script>
+(function () {
+  var doc = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- theme ---------- */
+  var themeBtn = document.getElementById('themeBtn');
+  try { var saved = localStorage.getItem('ke-theme'); if (saved) doc.setAttribute('data-theme', saved); } catch (e) {}
+  function isDark() {
+    var t = doc.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  themeBtn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    doc.setAttribute('data-theme', next);
+    try { localStorage.setItem('ke-theme', next); } catch (e) {}
+  });
+
+  /* ---------- menu ---------- */
+  var menuBtn = document.getElementById('menuBtn'), nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  });
+
+  /* ---------- scroll progress, timeline line ---------- */
+  var progress = document.getElementById('progress'), timeline = document.getElementById('timeline'), ticking = false;
+  function onScroll() {
+    ticking = false;
+    var h = doc.scrollHeight - window.innerHeight;
+    progress.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, window.scrollY / h) : 0) + ')';
+    if (timeline) {
+      var r = timeline.getBoundingClientRect();
+      var p = (window.innerHeight * 0.6 - r.top) / r.height;
+      timeline.style.setProperty('--tl', Math.max(0, Math.min(1, p)) * 100 + '%');
+    }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+
+  /* ---------- reveal on scroll ---------- */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+    var links = nav.querySelectorAll('a');
+    var secObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (a) { a.setAttribute('aria-current', a.getAttribute('href') === '#' + en.target.id ? 'true' : 'false'); });
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['work', 'skills', 'experience', 'certificates', 'contact'].forEach(function (id) { var s = document.getElementById(id); if (s) secObs.observe(s); });
+  }
+
+  /* ---------- hero counters ---------- */
+  var counts = document.querySelectorAll('.count');
+  if (!reduce) {
+    var t0 = performance.now(), dur = 1800;
+    counts.forEach(function (c) { c.textContent = '0'; });
+    (function step(now) {
+      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+      counts.forEach(function (c) { c.textContent = Math.round(+c.getAttribute('data-to') * e).toLocaleString('en-US'); });
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  /* ---------- contour field ---------- */
+  var hero = document.getElementById('top'), cv = document.getElementById('field'), ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = 1, cell = 14, cols = 0, rows = 0, vals = null, running = false, last = 0, tStart = performance.now();
+  var colLine = 'rgba(10,124,132,.3)', colAcc = '#0a7c84', colSig = '#c63e0c', colFg = '#0a1a2a';
+  var m = { x: 0.62, y: 0.45, tx: 0.62, ty: 0.45, last: 0 };
+  var rz = document.getElementById('rz'), rlat = document.getElementById('rlat'), rlon = document.getElementById('rlon');
+  var U = 180;
+  function readColors() {
+    var s = getComputedStyle(doc);
+    colLine = s.getPropertyValue('--contour').trim() || colLine;
+    colAcc = s.getPropertyValue('--accent').trim() || colAcc;
+    colSig = s.getPropertyValue('--signal').trim() || colSig;
+    colFg = s.getPropertyValue('--fg').trim() || colFg;
+  }
+  function resize() {
+    var r = hero.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = Math.max(1, r.width); H = Math.max(1, r.height);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cell = W < 640 ? 18 : 14;
+    cols = Math.ceil(W / cell) + 1; rows = Math.ceil(H / cell) + 1;
+    vals = new Float32Array(cols * rows);
+  }
+  function fieldAt(x, y, t, mx, my) {
+    var v = Math.sin(x * 1.15 + t * 0.35 + Math.sin(y * 0.9 - t * 0.2) * 1.2) * 0.55
+      + Math.sin(y * 1.35 - t * 0.28 + x * 0.35) * 0.45
+      + Math.sin((x + y) * 0.62 + t * 0.21) * 0.4
+      + Math.sin(Math.hypot(x - 2.5, y - 1.5) * 1.9 - t * 0.3) * 0.3
+      + Math.sin(x * 2.9 + y * 2.3 + t * 0.4) * 0.08;
+    var dx = x - mx, dy = y - my;
+    return v + 1.9 * Math.exp(-(dx * dx + dy * dy) / 0.9);
+  }
+  function draw(now) {
+    var t = (now - tStart) / 1000;
+    if (reduce) t = 3;
+    var auto = (now - m.last) > 2500;
+    if (auto && !reduce) { m.tx = 0.5 + 0.34 * Math.sin(t * 0.23); m.ty = 0.46 + 0.26 * Math.sin(t * 0.31 + 1); }
+    m.x += (m.tx - m.x) * 0.08; m.y += (m.ty - m.y) * 0.08;
+    var mx = m.x * W / U, my = m.y * H / U, i, j, L, k;
+    for (j = 0; j < rows; j++) for (i = 0; i < cols; i++) vals[j * cols + i] = fieldAt(i * cell / U, j * cell / U, t, mx, my);
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = colLine; ctx.lineJoin = 'round';
+    for (L = -1.2, k = 0; L < 2.8; L += 0.3, k++) {
+      var idx = (k % 4 === 0);
+      ctx.beginPath();
+      for (j = 0; j < rows - 1; j++) {
+        for (i = 0; i < cols - 1; i++) {
+          var a = vals[j * cols + i], b = vals[j * cols + i + 1], c = vals[(j + 1) * cols + i + 1], d = vals[(j + 1) * cols + i];
+          var s = (a > L ? 8 : 0) | (b > L ? 4 : 0) | (c > L ? 2 : 0) | (d > L ? 1 : 0);
+          if (s === 0 || s === 15) continue;
+          var x = i * cell, y = j * cell;
+          var tx = x + cell * (L - a) / (b - a), ty = y;
+          var rx = x + cell, ry = y + cell * (L - b) / (c - b);
+          var bx = x + cell * (L - d) / (c - d), by = y + cell;
+          var lx = x, ly = y + cell * (L - a) / (d - a);
+          switch (s) {
+            case 1: case 14: ctx.moveTo(lx, ly); ctx.lineTo(bx, by); break;
+            case 2: case 13: ctx.moveTo(bx, by); ctx.lineTo(rx, ry); break;
+            case 3: case 12: ctx.moveTo(lx, ly); ctx.lineTo(rx, ry); break;
+            case 4: case 11: ctx.moveTo(tx, ty); ctx.lineTo(rx, ry); break;
+            case 5: ctx.moveTo(lx, ly); ctx.lineTo(tx, ty); ctx.moveTo(bx, by); ctx.lineTo(rx, ry); break;
+            case 6: case 9: ctx.moveTo(tx, ty); ctx.lineTo(bx, by); break;
+            case 7: case 8: ctx.moveTo(lx, ly); ctx.lineTo(tx, ty); break;
+            case 10: ctx.moveTo(tx, ty); ctx.lineTo(rx, ry); ctx.moveTo(lx, ly); ctx.lineTo(bx, by); break;
+          }
+        }
+      }
+      ctx.globalAlpha = idx ? 1 : 0.55; ctx.lineWidth = idx ? 1.5 : 0.9; ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    /* spot height marker at the survey point */
+    var px = m.x * W, py = m.y * H, z = fieldAt(m.x * W / U, m.y * H / U, t, mx, my);
+    ctx.strokeStyle = colSig; ctx.fillStyle = colSig; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, 6.2832); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px - 16, py); ctx.lineTo(px - 8, py); ctx.moveTo(px + 8, py); ctx.lineTo(px + 16, py);
+    ctx.moveTo(px, py - 16); ctx.lineTo(px, py - 8); ctx.moveTo(px, py + 8); ctx.lineTo(px, py + 16); ctx.stroke();
+    ctx.beginPath(); ctx.arc(px, py, 1.6, 0, 6.2832); ctx.fill();
+    ctx.font = '500 11px "IBM Plex Mono", monospace'; ctx.fillStyle = colFg;
+    var el = Math.round((z + 2) * 45);
+    ctx.fillText(el + ' m', px + 14, py - 12);
+    rz.textContent = el;
+    rlat.textContent = (27.0 - m.y * 0.03).toFixed(4);
+    rlon.textContent = (33.88 + m.x * 0.05).toFixed(4);
+  }
+  function loop(now) {
+    if (!running) return;
+    if (now - last > 33) { last = now; draw(now); }
+    requestAnimationFrame(loop);
+  }
+  function start() { if (!running && !reduce && !document.hidden) { running = true; requestAnimationFrame(loop); } }
+  function stop() { running = false; }
+  readColors(); resize(); draw(performance.now());
+  window.addEventListener('resize', function () { resize(); draw(performance.now()); });
+  hero.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect();
+    m.tx = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    m.ty = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+    m.last = performance.now();
+  });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { if (en[0].isIntersecting) start(); else stop(); }, { threshold: 0 }).observe(hero);
+  } else { start(); }
+  document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
+  new MutationObserver(function () { readColors(); if (!running) draw(performance.now()); }).observe(doc, { attributes: true, attributeFilter: ['data-theme'] });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { readColors(); if (!running) draw(performance.now()); });
+
+  /* ---------- keep the name inside the screen once the display font has loaded ---------- */
+  var h1 = document.getElementById('h1');
+  function fitH1() {
+    h1.style.fontSize = '';
+    var avail = h1.clientWidth, need = 0;
+    h1.querySelectorAll('.ln > span').forEach(function (s) {
+      var r = document.createRange(); r.selectNodeContents(s);
+      need = Math.max(need, r.getBoundingClientRect().width);
+    });
+    if (need > avail && avail > 0) h1.style.fontSize = (parseFloat(getComputedStyle(h1).fontSize) * avail / need * 0.98) + 'px';
+  }
+  fitH1();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitH1);
+  window.addEventListener('resize', fitH1);
+
+  /* ---------- filmstrip ---------- */
+  var film = document.getElementById('film'), dragged = false;
+  document.getElementById('filmPrev').addEventListener('click', function () { film.scrollBy({ left: -film.clientWidth * 0.8, behavior: 'smooth' }); });
+  document.getElementById('filmNext').addEventListener('click', function () { film.scrollBy({ left: film.clientWidth * 0.8, behavior: 'smooth' }); });
+  var down = false, sx = 0, sl = 0;
+  film.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') return; down = true; dragged = false; sx = e.clientX; sl = film.scrollLeft; });
+  window.addEventListener('pointermove', function (e) {
+    if (!down) return;
+    var dx = e.clientX - sx;
+    if (Math.abs(dx) > 5) { dragged = true; film.classList.add('drag'); }
+    if (dragged) film.scrollLeft = sl - dx;
+  });
+  window.addEventListener('pointerup', function () { down = false; film.classList.remove('drag'); });
+  film.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
+
+  /* ---------- compare slider ---------- */
+  var cmp = document.getElementById('cmp'), range = document.getElementById('cmpRange');
+  function setPos(v) { cmp.style.setProperty('--pos', v + '%'); }
+  range.addEventListener('input', function () { setPos(range.value); });
+  if (!reduce && 'IntersectionObserver' in window) {
+    var hinted = false;
+    new IntersectionObserver(function (en, ob) {
+      if (en[0].isIntersecting && !hinted) {
+        hinted = true; ob.disconnect();
+        var t1 = performance.now();
+        (function sweep(now) {
+          var p = Math.min(1, (now - t1) / 2200);
+          if (document.activeElement === range) return;
+          var v = 50 + Math.sin(p * Math.PI * 2) * 32 * (1 - p * 0.3);
+          range.value = v; setPos(v);
+          if (p < 1) requestAnimationFrame(sweep); else { range.value = 50; setPos(50); }
+        })(t1);
+      }
+    }, { threshold: 0.5 }).observe(cmp);
+  }
+
+  /* ---------- copy ---------- */
+  var live = document.getElementById('copyLive');
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var el = document.getElementById(b.getAttribute('data-copy')), txt = el.textContent.trim();
+      function done(ok) {
+        b.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+        live.textContent = ok ? 'Copied to clipboard' : 'Text selected. Press Ctrl+C to copy.';
+        setTimeout(function () { b.textContent = 'Copy'; }, 1800);
+      }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done(false);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(function () { done(true); }, fallback);
+      } else fallback();
+    });
+  });
+
+  /* ---------- lightbox ---------- */
+  var lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+  var group = [], gi = 0, opener = null;
+  function show() {
+    var it = group[gi];
+    lbImg.src = it.getAttribute('data-lb');
+    lbImg.alt = it.getAttribute('data-cap') || '';
+    lbCap.textContent = (it.getAttribute('data-cap') || '') + (group.length > 1 ? '  ·  ' + (gi + 1) + ' / ' + group.length : '');
+    document.getElementById('lbP').style.display = document.getElementById('lbN').style.display = group.length > 1 ? '' : 'none';
+  }
+  function openLb(el) {
+    var g = el.getAttribute('data-group');
+    group = Array.prototype.slice.call(document.querySelectorAll('[data-lb][data-group="' + g + '"]'));
+    gi = Math.max(0, group.indexOf(el)); opener = el;
+    show(); lb.hidden = false; document.body.style.overflow = 'hidden';
+    document.getElementById('lbX').focus();
+  }
+  function closeLb() { lb.hidden = true; document.body.style.overflow = ''; lbImg.removeAttribute('src'); if (opener) opener.focus(); }
+  function step(d) { gi = (gi + d + group.length) % group.length; show(); }
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-lb]') : null;
+    if (el) openLb(el);
+  });
+  document.getElementById('lbX').addEventListener('click', closeLb);
+  document.getElementById('lbP').addEventListener('click', function () { step(-1); });
+  document.getElementById('lbN').addEventListener('click', function () { step(1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
+</body>
+</html>
